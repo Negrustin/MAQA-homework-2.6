@@ -16,7 +16,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '17' # Используйте версию JDK 17
 
     - name: Build and run Espresso tests
       run: |
@@ -28,7 +28,7 @@ jobs:
       with:
         api-level: 30
         arch: x86
-        profile: Nexus 5 # Выберите профиль эмулятор
+        profile: Nexus 5
         grant-permissions: true
         wait-for-boot: true
 
