@@ -1,0 +1,37 @@
+name: Espresso Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Build and run Espresso tests
+      run: |
+        ./gradlew clean assembleDebug
+        ./gradlew connectedCheck
+
+    - name: Set up Android emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 30
+        arch: x86
+        profile: Nexus 5 # Выберите профиль эмулятор
+        grant-permissions: true
+        wait-for-boot: true
+
+    - name: Run Espresso tests on emulator
+      run: |
+        ./gradlew connectedAndroidTest
