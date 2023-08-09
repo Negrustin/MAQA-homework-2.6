@@ -12,10 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: set up JDK 17
+    - name: set up JDK 11
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
+        java-version: '11'
         distribution: 'adopt'
         cache: gradle
 
@@ -29,23 +29,19 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - name: set up JDK 17
+    - name: set up JDK 11
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
+        java-version: '11'
         distribution: 'adopt'
         cache: gradle
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    - name: Set up Android emulator
+    - name: run tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
-       
-    - name: Wait for emulator to boot
-      run: sleep 30 # Подождать, пока эмулятор запустится
-
-    - name: Run Espresso tests on emulator
-      run: ./gradlew connectedCheck
+        run: sleep 30
+        script: ./gradlew connectedCheck
