@@ -39,8 +39,13 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    - name: run tests
+    - name: Set up Android emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
         api-level: 29
-        script: ./gradlew connectedCheck
+       
+    - name: Wait for emulator to boot
+      run: sleep 30 # Подождать, пока эмулятор запустится
+
+    - name: Run Espresso tests on emulator
+      run: ./gradlew connectedCheck
